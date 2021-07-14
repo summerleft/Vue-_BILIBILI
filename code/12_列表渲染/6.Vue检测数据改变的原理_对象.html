@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <title>Vue监测数据改变的原理</title>
+</head>
+<body>
+  <div id="root">
+    <h2>学校名称：{{name}}</h2>
+    <h2>学校地址：{{address}}</h2>
+  </div>
+  <script src="../js/vue.js"></script>
+  <script>
+    Vue.config.productionTip = false;
+
+    new Vue({
+      el: '#root',
+      data() {
+        return {
+          name: 'HUST',
+          address: 'Wuhan'
+        }
+      },
+    })
+  </script>
+</body>
+</html>
