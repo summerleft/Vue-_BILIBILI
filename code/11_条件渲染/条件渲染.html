@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <title>条件渲染</title>
+</head>
+<body>
+  <!-- 
+    条件渲染
+      1.v-if
+        写法：
+          （1）v-if=“表达式”
+          （2）v-else-if="表达式"
+          （3）v-else="表达式"
+        适用于：切换频率较低的场景
+        特点：不展示DOM元素直接被移除 
+        注意：v-if可以和v-else-if，v-else一起使用，但必须连续使用
+      2.v-show
+        写法：v-show="表达式"
+        适用于：切换频率较高的场景
+        特点：不展示DOM元素未被移除，仅仅是样式隐藏
+      3.备注：
+        使用v-if时元素可能无法获取到，而v-show一定可以获取
+  -->
+  
+  <div id="root">
+    <!-- <h2 v-show="1 === 1">欢迎来到{{name}}</h2>
+    <h2 v-if="1 === 1">欢迎来到{{name}}</h2> -->
+    <h2>当前的n值是{{n}}</h2>
+    <button @click='n++'>点我+1</button>
+
+    <div v-if="n === 1">Angular</div>
+    <div v-else-if="n === 2">React</div>
+    <div v-else-if="n === 3">Vue</div>
+    <div v-else>haha</div>
+    
+  </div>
+  <script src="../js/vue.js"></script>
+  <script>
+    Vue.config.productionTip = false;
+
+    new Vue({
+      el: '#root',
+      data() {
+        return {
+          name: 'HUST',
+          n: 0,
+        }
+      },
+    })
+  </script>
+</body>
+</html>
