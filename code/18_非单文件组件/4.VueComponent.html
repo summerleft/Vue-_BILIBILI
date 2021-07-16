@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <school></school>
+    <hello></hello>
+  </div>
+  <script src="../js/vue.js"></script>
+  <script>
+    Vue.config.productionTip = false;
+
+    const school = Vue.extend({
+      template: `
+        <div>
+          <h2>学校名称:{{schoolName}}</h2>
+          <h2>学校地址:{{address}}</h2>
+        </div>
+      `,
+      data() {
+        return {
+          schoolName: 'HUST',
+          address: '湖北武汉',
+        }
+      },
+    })
+
+    const hello = Vue.extend({
+      template: `<h2>{{msg}}</h2>`,
+      data() {
+        return {
+          msg: 'hello!'
+        }
+      },
+    })
+
+    new Vue({
+      el: '#root',
+      components: {
+        school,
+        hello,
+      }
+    })
+  </script>
+</body>
+</html>
