@@ -1,109 +1,48 @@
 <template>
-  <div id="root">
-    <div class="todo-container">
-      <div class="todo-wrap">
-        <my-header :addTodo="addTodo" />
-        <my-list :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
-        <my-footer :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo" />
-      </div>
-    </div>
+  <div class="app">
+    <h1>{{msg}}</h1>
+    <!-- 通过父组件给子组件传递函数类型的props实现：子给父传递数据 -->
+    <School :getSchoolName="getSchoolName" />
+    <!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据(v-on) -->
+    <!-- <Student v-on:athust="getStudentName" /> -->
+    <!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据(ref) -->
+    <Student ref="student" />
   </div>
 </template>
 
 <script>
-  import MyHeader from './components/MyHeader'
-  import MyList from './components/MyList'
-  import MyFooter from './components/MyFooter'
-
+  import School from './components/School'
+  import Student from './components/Student'
+  
   export default {
     name: 'App',
     components: {
-      MyHeader,
-      MyList,
-      MyFooter,
+      School,
+      Student
     },
     data() {
       return {
-        todos: [
-          {id:'0001',title:'吃饭',done:true},
-          {id:'0002',title:'喝酒',done:false},
-          {id:'0003',title:'开车',done:true},
-        ]
+        msg: '你好啊!'
       }
     },
     methods: {
-      addTodo(todoObj) {
-        this.todos.unshift(todoObj)
+      getSchoolName(name) {
+        console.log('app收到了学校名', name)
       },
-      checkTodo(id) {
-        this.todos.forEach((todo) => {
-          if(todo.id === id) todo.done = !todo.done
-        })
-      },
-      deleteTodo(id) {
-        this.todos = this.todos.filter((todo) => {
-          return todo.id !== id
-        })
-      },
-      checkAllTodo(done) {
-        this.todos.forEach((todo) => {
-          todo.done = done
-        })
-      },
-      clearAllTodo() {
-        this.todos = this.todos.filter((todo) => {
-          return !todo.done
-        })
+      getStudentName(name) {
+        console.log('App收到了学生名', name)
       }
+    },
+    mounted() {
+      // this.$refs.student.$on('athust', this.getStudentName) // 绑定自定义事件
+      this.$refs.student.$once('athust', this.getStudentName) // 绑定自定义事件（一次性)
     },
   }
 </script>
 
-<style>
-  /*base*/
-  body {
-    background: #fff;
+<style scoped>
+  .app {
+    background-color: gray;
+    padding: 5px;
   }
-
-  .btn {
-    display: inline-block;
-    padding: 4px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-  }
-
-  .btn-danger {
-    color: #fff;
-    background-color: #da4f49;
-    border: 1px solid #bd362f;
-  }
-
-  .btn-danger:hover {
-    color: #fff;
-    background-color: #bd362f;
-  }
-
-  .btn:focus {
-    outline: none;
-  }
-
-  .todo-container .todo-wrap {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  
-
-  
-
-  
-
-  
 </style>
