@@ -2,9 +2,9 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <my-header />
-        <my-list />
-        <my-footer />
+        <my-header :addTodo="addTodo" />
+        <my-list :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
+        <my-footer :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo" />
       </div>
     </div>
   </div>
@@ -21,7 +21,41 @@
       MyHeader,
       MyList,
       MyFooter,
-    }
+    },
+    data() {
+      return {
+        todos: [
+          {id:'0001',title:'吃饭',done:true},
+          {id:'0002',title:'喝酒',done:false},
+          {id:'0003',title:'开车',done:true},
+        ]
+      }
+    },
+    methods: {
+      addTodo(todoObj) {
+        this.todos.unshift(todoObj)
+      },
+      checkTodo(id) {
+        this.todos.forEach((todo) => {
+          if(todo.id === id) todo.done = !todo.done
+        })
+      },
+      deleteTodo(id) {
+        this.todos = this.todos.filter((todo) => {
+          return todo.id !== id
+        })
+      },
+      checkAllTodo(done) {
+        this.todos.forEach((todo) => {
+          todo.done = done
+        })
+      },
+      clearAllTodo() {
+        this.todos = this.todos.filter((todo) => {
+          return !todo.done
+        })
+      }
+    },
   }
 </script>
 
