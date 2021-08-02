@@ -27,13 +27,12 @@
       }
     },
     computed: {
-      ...mapState('countAbout',['sum', 'school', 'subject']),
-      ...mapState('personAbout',['personList']),
-      ...mapGetters('countAbout',['bigSum'])
+      ...mapState(['sum', 'school', 'subject', 'personList']),
+      ...mapGetters(['bigSum'])
     },
     methods: {
-      ...mapMutations('countAbout',{increment: 'ADD', decrement: 'REDUCE'}),
-      ...mapActions('countAbout',{incrementOdd: 'addOdd', incrementWait: 'addWait'})
+      ...mapMutations({increment: 'ADD', decrement: 'REDUCE'}),
+      ...mapActions({incrementOdd: 'addOdd', incrementWait: 'addWait'})
     },
     mounted() {
       
