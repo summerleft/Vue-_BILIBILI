@@ -7,13 +7,12 @@ import Message from '../pages/Message'
 import Detail from '../pages/Detail'
 
 const router = new VueRouter({
-  mode: 'history',
   routes: [
     {
       name: 'guanyu',
       path: '/about',
       component: About,
-      meta: {isAuth: true, title: '关于'}
+      meta: {title: '关于'}
     },
     {
       name: 'zhuye',
@@ -26,17 +25,17 @@ const router = new VueRouter({
           path: 'news',
           component: News,
           meta: {isAuth: true, title: '新闻'},
-          // beforeEnter: (to, from, next) => {
-          //   if (to.meta.isAuth) {
-          //     if (localStorage.getItem('school') === 'Hust') {
-          //       next()
-          //     } else {
-          //       alert('学校不对，无权查看')
-          //     }
-          //   } else {
-          //     next()
-          //   }
-          // }
+          beforeEnter: (to, from, next) => {
+            if (to.meta.isAuth) {
+              if (localStorage.getItem('school') === 'Hust') {
+                next()
+              } else {
+                alert('学校不对，无权查看')
+              }
+            } else {
+              next()
+            }
+          }
         },
         {
           name: 'xiaoxi',
@@ -76,8 +75,8 @@ const router = new VueRouter({
 // })
 
 // 全局后置路由守卫--初始化及每次路由切换后被调用
-// router.afterEach((to) => {
-//   document.title = to.meta.title || 'Vue'
-// })
+router.afterEach((to) => {
+  document.title = to.meta.title || 'Vue'
+})
 
 export default router

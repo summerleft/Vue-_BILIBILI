@@ -7,13 +7,12 @@ import Message from '../pages/Message'
 import Detail from '../pages/Detail'
 
 const router = new VueRouter({
-  mode: 'history',
   routes: [
     {
       name: 'guanyu',
       path: '/about',
       component: About,
-      meta: {isAuth: true, title: '关于'}
+      meta: {title: '关于'}
     },
     {
       name: 'zhuye',
@@ -25,18 +24,7 @@ const router = new VueRouter({
           name: 'xinwen',
           path: 'news',
           component: News,
-          meta: {isAuth: true, title: '新闻'},
-          // beforeEnter: (to, from, next) => {
-          //   if (to.meta.isAuth) {
-          //     if (localStorage.getItem('school') === 'Hust') {
-          //       next()
-          //     } else {
-          //       alert('学校不对，无权查看')
-          //     }
-          //   } else {
-          //     next()
-          //   }
-          // }
+          meta: {isAuth: true, title: '新闻'}
         },
         {
           name: 'xiaoxi',
@@ -61,23 +49,23 @@ const router = new VueRouter({
 })
 
 // 全局前置路由守卫--初始化及每次路由切换前被调用
-// router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   
-//   if (to.meta.isAuth) {
-//     if (localStorage.getItem('school') === 'Hust') {
-//       next()
-//     } else {
-//       alert('学校不对，无权查看')
-//     }
-//   } else {
-//     next()
-//   }
+  if (to.meta.isAuth) {
+    if (localStorage.getItem('school') === 'Hust') {
+      next()
+    } else {
+      alert('学校不对，无权查看')
+    }
+  } else {
+    next()
+  }
   
-// })
+})
 
-// 全局后置路由守卫--初始化及每次路由切换后被调用
-// router.afterEach((to) => {
-//   document.title = to.meta.title || 'Vue'
-// })
+// 全局前置路由守卫--初始化及每次路由切换后被调用
+router.afterEach((to) => {
+  document.title = to.meta.title || 'Vue'
+})
 
 export default router
